@@ -2,39 +2,41 @@
 # SPDX-License-Identifier: Apache-2.0
 
 import cocotb
-from cocotb.clock import Clock
-from cocotb.triggers import ClockCycles
-
+from cocotb.triggers import RisingEdge
+from cocotb.result import TestFailure
 
 @cocotb.test()
-async def test_project(dut):
-    dut._log.info("Start")
+async def test_tt_um_senolgulgonul(dut):
+    expected_letters = [
+        0b1011011,  # S
+        0b1001111,  # E
+        0b0010101,  # n
+        0b1111110,  # O
+        0b0001110,  # L
+        0b1011111,  # G
+        0b0111110,  # U
+        0b0001110,  # L
+        0b1011111,  # G
+        0b1111110,  # O
+        0b0010101,  # n
+        0b0111110,  # U
+        0b0001110   # L
+    ]
 
-    # Set the clock period to 10 us (100 KHz)
-    clock = Clock(dut.clk, 10, units="us")
-    cocotb.start_soon(clock.start())
+    for i in range(len(expected_letters)):
+        dut.btn.value = 1
+        await RisingEdge(dut.btn)
+        await cocotb.triggers.Timer(1, units='ns')
+        dut.btn.value = 0
+        await cocotb.triggers.Timer(1, units='ns')
+        
+        output_value = (dut.a.value << 6) | (dut.b.value << 5) | (dut.c.value << 4) | \
+                       (dut.d.value << 3) | (dut.e.value << 2) | (dut.f.value << 1) | \
+                       (dut.g.value)
+        dut._log.info(f'Index: {i}, Expected: {expected_letters[i]:07b}, Output: {output_value:07b}')
+        
+        if output_value != expected_letters[i]:
+            raise TestFailure(f"Mismatch at index {i}: Expected {expected_letters[i]:07b}, got {output_value:07b}")
 
-    # Reset
-    dut._log.info("Reset")
-    dut.ena.value = 1
-    dut.ui_in.value = 0
-    dut.uio_in.value = 0
-    dut.rst_n.value = 0
-    await ClockCycles(dut.clk, 10)
-    dut.rst_n.value = 1
+    dut._log.info("Test completed successfully.")
 
-    dut._log.info("Test project behavior")
-
-    # Set the input values you want to test
-    dut.ui_in.value = 20
-    dut.uio_in.value = 30
-
-    # Wait for one clock cycle to see the output values
-    await ClockCycles(dut.clk, 1)
-
-    # The following assersion is just an example of how to check the output values.
-    # Change it to match the actual expected output of your module:
-    # assert dut.uo_out.value == 50
-
-    # Keep testing the module by changing the input values, waiting for
-    # one or more clock cycles, and asserting the expected output values.
