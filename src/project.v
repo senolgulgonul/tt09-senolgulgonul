@@ -5,8 +5,6 @@
 
 `default_nettype none
 
-`default_nettype none
-
 module tt_um_senolgulgonul (
     input  wire [7:0] ui_in,    // Dedicated inputs
     output wire [7:0] uo_out,   // Dedicated outputs
@@ -39,12 +37,8 @@ module tt_um_senolgulgonul (
         index = 0;
     end
 
-    always @(posedge clk or negedge rst_n) begin
-        if (!rst_n)
-            index <= 0;
-        else if (ui_in[0])  // Use the first bit of ui_in as the button input
-            index <= (index == 4'd12) ? 0 : index + 1;
-
+    always @(posedge ui_in[0]) begin
+        index <= (index == 4'd12) ? 0 : index + 1;
         {uo_out[6], uo_out[5], uo_out[4], uo_out[3], uo_out[2], uo_out[1], uo_out[0]} <= letters[index];
         uo_out[7] <= 1'b0; // Set the highest bit to 0
     end
@@ -54,8 +48,9 @@ module tt_um_senolgulgonul (
     assign uio_oe = 8'b11111111;
 
     // Prevent warnings for unused inputs
-    wire _unused = &{ena, uio_in, 1'b0};
+    wire _unused = &{ena, clk, rst_n, uio_in, 1'b0};
 
 endmodule
+
 
 
