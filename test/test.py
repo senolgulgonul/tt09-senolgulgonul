@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 import cocotb
-from cocotb.triggers import RisingEdge
+from cocotb.triggers import Timer
 from cocotb.result import TestFailure
 
 @cocotb.test()
@@ -26,11 +26,12 @@ async def test_tt_um_senolgulgonul(dut):
     dut.ui_in.value = 0
 
     for i in range(len(expected_letters)):
-        # Trigger the positive edge of ui_in[0]
+        # Manually trigger the positive edge of ui_in[0]
         dut.ui_in.value = 1
-        await RisingEdge(dut.ui_in[0])
+        await Timer(1, units='ns')  # Allow time for the positive edge to be recognized
         dut.ui_in.value = 0
-       
+        await Timer(1, units='ns')  # Allow time for the value to propagate
+
         output_value = dut.uo_out.value.integer & 0x7F  # Mask the highest bit
         dut._log.info(f'Index: {i}, Expected: {expected_letters[i]:07b}, Output: {output_value:07b}')
        
@@ -38,9 +39,4 @@ async def test_tt_um_senolgulgonul(dut):
             raise TestFailure(f"Mismatch at index {i}: Expected {expected_letters[i]:07b}, got {output_value:07b}")
 
     dut._log.info("Test completed successfully.")
-
-
-
-
-
 
