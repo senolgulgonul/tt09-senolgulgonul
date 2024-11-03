@@ -1,27 +1,42 @@
 /*
- * Copyright (c) 2024 Your Name
+ * Copyright (c) 2024 Senol Gulgonul
  * SPDX-License-Identifier: Apache-2.0
  */
 
 `default_nettype none
 
-module tt_um_example (
-    input  wire [7:0] ui_in,    // Dedicated inputs
-    output wire [7:0] uo_out,   // Dedicated outputs
-    input  wire [7:0] uio_in,   // IOs: Input path
-    output wire [7:0] uio_out,  // IOs: Output path
-    output wire [7:0] uio_oe,   // IOs: Enable path (active high: 0=input, 1=output)
-    input  wire       ena,      // always 1 when the design is powered, so you can ignore it
-    input  wire       clk,      // clock
-    input  wire       rst_n     // reset_n - low to reset
+module tt_um_senolgulgonul(
+    input btn,
+    output reg a, b, c, d, e, f, g
 );
 
-  // All output pins must be assigned. If not used, assign to 0.
-  assign uo_out  = ui_in + uio_in;  // Example: ou_out is the sum of ui_in and uio_in
-  assign uio_out = 0;
-  assign uio_oe  = 0;
+    reg [3:0] index;
+    reg [6:0] letters[0:12];
 
-  // List all unused inputs to prevent warnings
-  wire _unused = &{ena, clk, rst_n, 1'b0};
+    initial begin
+        // 7-segment encodings for "SEnOLGULGONUL"
+        letters[0]  = 7'b1011011; // S
+        letters[1]  = 7'b1001111; // E
+        letters[2]  = 7'b0010101; // n
+        letters[3]  = 7'b1111110; // O
+        letters[4]  = 7'b0001110; // L
+        letters[5]  = 7'b1011111; // G 
+        letters[6]  = 7'b0111110; // U
+        letters[7]  = 7'b0001110; // L
+        letters[8]  = 7'b1011111; // G 
+        letters[9]  = 7'b1111110; // O
+        letters[10] = 7'b0010101; // n
+        letters[11] = 7'b0111110; // U
+        letters[12] = 7'b0001110; // L
+        index = 0;
+    end
+
+    always @(posedge btn) begin
+        index <= index + 1;
+        if (index == 4'd13) // Loop back after the last letter
+            index <= 0;
+        {a, b, c, d, e, f, g} <= letters[index];
+    end
 
 endmodule
+
