@@ -51,7 +51,7 @@ module tt_um_senolgulgonul (
     assign uio_oe = 8'b11111111;
 
     // Prevent warnings for unused inputs
-    wire _unused = &{ena, clk, rst_n, uio_in, 1'b0};
+    wire _unused = &{ena, clk, rst_n, uio_in, ui_in[7:1], 1'b0};
 
 endmodule
 
