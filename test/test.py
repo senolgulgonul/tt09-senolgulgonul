@@ -31,7 +31,6 @@ async def test_tt_um_senolgulgonul(dut):
         # Trigger the positive edge of ui_in[0]
         dut.ui_in.value = 1
         await RisingEdge(dut.ui_in[0])
-        await RisingEdge(dut.clk)
         dut.ui_in.value = 0
         
         output_value = dut.uo_out.value.integer & 0x7F  # Mask the highest bit
