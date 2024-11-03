@@ -6,7 +6,7 @@ from cocotb.triggers import RisingEdge
 from cocotb.result import TestFailure
 
 @cocotb.test()
-async def test_tt_um_senolgulgonul(dut):
+async def tt_um_senolgulgonul(dut):
     expected_letters = [
         0b1011011,  # S
         0b1001111,  # E
