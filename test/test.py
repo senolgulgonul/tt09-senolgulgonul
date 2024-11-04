@@ -31,9 +31,9 @@ async def test_tt_um_senolgulgonul(dut):
     for i in range(len(expected_letters)):
         # Simulate button press: create a clean rising edge on ui_in[0]
         dut.ui_in.value = 0
-        await Timer(100, units='ns')
+        await Timer(500, units='ns')
         dut.ui_in.value = 1
-        await Timer(100, units='ns')
+        await Timer(500, units='ns')
 
         # Capture the full output and log it
         full_output = dut.uo_out.value.binstr  # Get the full binary string
