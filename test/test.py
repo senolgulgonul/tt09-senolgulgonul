@@ -29,9 +29,9 @@ async def test_tt_um_senolgulgonul(dut):
     for i in range(len(expected_letters)):
         # Simulate button press: create a clean rising edge on ui_in[0]
         dut.ui_in.value = 0
-        await Timer(100, units='ns')
+        await Timer(500, units='ns')
         dut.ui_in.value = 1
-        await Timer(100, units='ns')
+        await Timer(500, units='ns')
 
         output_value = dut.uo_out.value.binstr  # Get the full 8-bit binary string
 
@@ -41,7 +41,7 @@ async def test_tt_um_senolgulgonul(dut):
         assert output_value == expected_letters[i], f"Mismatch at index {i}: Expected {expected_letters[i]}, got {output_value}"
 
         # Ensure ui_in[0] is low again for the next cycle
-        await Timer(100, units='ns')
+        await Timer(500, units='ns')
 
 
     dut._log.info("Test completed successfully.")
