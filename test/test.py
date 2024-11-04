@@ -40,7 +40,7 @@ async def test_tt_um_senolgulgonul(dut):
 
         # Capture the full output and log it
         full_output = dut.uo_out.value.binstr  # Get the full binary string
-        output_value = full_output[1:7]  # Correctly slice the lower 7 bits in binary
+        output_value = full_output[1:8]  # Correctly slice the lower 7 bits in binary
 
         # Ensure the output_value is actually captured
         if output_value:
