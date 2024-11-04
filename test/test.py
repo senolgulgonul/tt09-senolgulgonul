@@ -2,7 +2,8 @@
 # SPDX-License-Identifier: Apache-2.0
 
 import cocotb
-from cocotb.triggers import Timer
+from cocotb.triggers import Timer, RisingEdge
+from cocotb.result import TestFailure
 
 @cocotb.test()
 async def test_tt_um_senolgulgonul(dut):
@@ -31,10 +32,15 @@ async def test_tt_um_senolgulgonul(dut):
         dut.ui_in.value = 0
         await Timer(1, units='ns')
 
+        # Check for uninitialized or high-impedance state
         output_value = dut.uo_out.value.integer & 0x7F  # Mask the highest bit
+        if 'x' in dut.uo_out.value.binstr or 'z' in dut.uo_out.value.binstr:
+            raise TestFailure(f"Uninitialized state detected at index {i}: Output value {dut.uo_out.value.binstr}")
+
         dut._log.info(f'Index: {i}, Expected: {expected_letters[i]:07b}, Output: {output_value:07b}')
 
         if output_value != expected_letters[i]:
             raise TestFailure(f"Mismatch at index {i}: Expected {expected_letters[i]:07b}, got {output_value:07b}")
 
     dut._log.info("Test completed successfully.")
+
