@@ -28,8 +28,9 @@ async def test_tt_um_senolgulgonul(dut):
 
     # Initialize signals
     dut.ui_in.value = 0
+    dut.uio_in.value = 0
 
-    # Wait for the initialization to settle
+    # Additional initialization period to ensure all signals are set
     await Timer(100, units='ns')
 
     for i in range(len(expected_letters)):
@@ -39,11 +40,16 @@ async def test_tt_um_senolgulgonul(dut):
         dut.ui_in.value = 1
         await Timer(10, units='ns')
 
+        # Capture the full output and specifically log each bit for debugging
         full_output = dut.uo_out.value.binstr  # Get the full binary string
         output_value = full_output[-7:]  # Correctly slice the lower 7 bits in binary
-
+        
         dut._log.info(f'Index: {i}, Full Output: {full_output}, Masked Output: {output_value}')
         dut._log.info(f'Expected: {expected_letters[i]}, Actual: {output_value}')
+
+        # Extra debug logging to capture and analyze the state of uo_out
+        if 'x' in full_output or 'z' in full_output:
+            dut._log.warning(f"Unresolved state detected at index {i}: Full Output: {full_output}")
 
         assert output_value == expected_letters[i], f"Mismatch at index {i}: Expected {expected_letters[i]}, got {output_value}"
 
@@ -52,4 +58,5 @@ async def test_tt_um_senolgulgonul(dut):
         await Timer(10, units='ns')
 
     dut._log.info("Test completed successfully.")
+
 
