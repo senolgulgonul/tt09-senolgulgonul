@@ -27,7 +27,9 @@ async def test_tt_um_senolgulgonul(dut):
     for i in range(len(expected_letters)):
         # Simulate button press
         dut.ui_in[0].value = 0
+        await Timer(500, units='ns')
         dut.ui_in[0].value = 1
+        await Timer(500, units='ns')
         output_value = dut.uo_out.value.binstr  # Get the full 8-bit binary string
         dut._log.info(f'Index: {i}, Full Output: {output_value}')
         dut._log.info(f'Expected: {expected_letters[i]}, Actual: {output_value}')
