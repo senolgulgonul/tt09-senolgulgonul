@@ -1,7 +1,6 @@
 # SPDX-FileCopyrightText: © 2024 Tiny Tapeout
 # SPDX-License-Identifier: Apache-2.0
 
-
 import os
 import cocotb
 from cocotb.triggers import Timer
@@ -38,7 +37,7 @@ async def test_tt_um_senolgulgonul(dut):
         await Timer(10, units='ns')
 
         full_output = dut.uo_out.value.binstr  # Get the full binary string
-        output_value = full_output[6:0]  # Get the lower 7 bits in binary
+        output_value = full_output[-7:]  # Correctly slice the lower 7 bits in binary
         
         dut._log.info(f'Index: {i}, Full Output: {full_output}, Masked Output: {output_value}')
         dut._log.info(f'Expected: {expected_letters[i]}, Actual: {output_value}')
@@ -50,7 +49,3 @@ async def test_tt_um_senolgulgonul(dut):
         await Timer(10, units='ns')
 
     dut._log.info("Test completed successfully.")
-
-
-
-
