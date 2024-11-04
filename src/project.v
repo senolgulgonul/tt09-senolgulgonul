@@ -16,9 +16,9 @@ module tt_um_senolgulgonul (
     input  wire       rst_n     // reset_n - low to reset
 );
 
-    reg [3:0] index;
+    reg [3:0] index = 0;
     reg [6:0] letters[0:12];
-    reg [6:0] segment_output; // Intermediate reg to hold 7-segment output
+    reg [6:0] segment_output = 7'b0000000; // Initialize to all segments off
 
     initial begin
         // 7-segment encodings for "SEnOLGULGONUL"
@@ -35,7 +35,6 @@ module tt_um_senolgulgonul (
         letters[10] = 7'b0010101; // n
         letters[11] = 7'b0111110; // U
         letters[12] = 7'b0001110; // L
-        index = 0;
     end
 
     always @(posedge ui_in[0]) begin
@@ -43,7 +42,6 @@ module tt_um_senolgulgonul (
         segment_output <= letters[index];
     end
 
-    // Assign the intermediate reg to the output wire
     assign uo_out = {1'b0, segment_output};  // Set the highest bit to 0
 
     // Assign the other outputs
@@ -54,6 +52,7 @@ module tt_um_senolgulgonul (
     wire _unused = &{ena, clk, rst_n, uio_in, ui_in[7:1], 1'b0};
 
 endmodule
+
 
 
 
