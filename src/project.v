@@ -18,7 +18,7 @@ module tt_um_senolgulgonul (
 
     reg [3:0] index = 0;
     reg [7:0] letters[0:13]; // Extended to 8 bits to include dp pin
-    reg [7:0] segment_output = 8'b00000000; // Initialize to all segments and dp off
+    reg [7:0] segment_output; // Initialize to all segments and dp off
 
     initial begin
         // 7-segment encodings for "SEnOLGULGONUL" with dp pin = 0
@@ -36,6 +36,7 @@ module tt_um_senolgulgonul (
         letters[11] = 8'b00111110; // U
         letters[12] = 8'b00001110; // L
         letters[13] = 8'b00000000; // dp = 0
+        segment_output = 8'b00000000;
     end
 
     always @(posedge ui_in[0]) begin
