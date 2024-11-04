@@ -42,3 +42,4 @@ async def test_tt_um_senolgulgonul(dut):
             raise TestFailure(f"Mismatch at index {i}: Expected {expected_letters[i]:07b}, got {output_value:07b}")
 
     dut._log.info("Test completed successfully.")
+
