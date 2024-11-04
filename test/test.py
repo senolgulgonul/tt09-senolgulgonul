@@ -37,8 +37,11 @@ async def test_tt_um_senolgulgonul(dut):
         dut.ui_in.value = 1
         await Timer(10, units='ns')
 
-        output_value = dut.uo_out.value.binstr[6:0]  # Get the lower 7 bits in binary
-        dut._log.info(f'Index: {i}, Expected: {expected_letters[i]}, Output: {output_value}')
+        full_output = dut.uo_out.value.binstr  # Get the full binary string
+        output_value = full_output[6:0]  # Get the lower 7 bits in binary
+        
+        dut._log.info(f'Index: {i}, Full Output: {full_output}, Masked Output: {output_value}')
+        dut._log.info(f'Expected: {expected_letters[i]}, Actual: {output_value}')
 
         assert output_value == expected_letters[i], f"Mismatch at index {i}: Expected {expected_letters[i]}, got {output_value}"
 
@@ -47,6 +50,7 @@ async def test_tt_um_senolgulgonul(dut):
         await Timer(10, units='ns')
 
     dut._log.info("Test completed successfully.")
+
 
 
 
