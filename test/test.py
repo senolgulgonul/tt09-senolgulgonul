@@ -49,7 +49,7 @@ async def test_tt_um_senolgulgonul(dut):
 
         # Extra debug logging to capture and analyze the state of uo_out
         if 'x' in full_output or 'z' in full_output:
-            dut._log.warning(f"Unresolved state detected at index {i}: Full Output: {full_output}")
+            dut._log.info(f"Unresolved state detected at index {i}: Full Output: {full_output}")
 
         assert output_value == expected_letters[i], f"Mismatch at index {i}: Expected {expected_letters[i]}, got {output_value}"
 
