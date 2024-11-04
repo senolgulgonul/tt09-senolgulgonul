@@ -24,9 +24,12 @@ async def test_tt_um_senolgulgonul(dut):
         "00000000"   # dp = 0
     ]
 
+    # Initialize all bits of dut.ui_in to 0
+    dut.ui_in.value = 0
+
     for i in range(len(expected_letters)):
         # Simulate button press: create a clean rising edge on ui_in[0]
-        dut.ui_in[0].value = 0
+        dut.ui_in.value = 0
         await Timer(500, units='ns')
         dut._log.info(f'ui_in[0] before press: {dut.ui_in[0].value}')
         dut.ui_in[0].value = 1
