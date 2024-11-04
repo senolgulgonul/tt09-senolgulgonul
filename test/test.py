@@ -24,11 +24,7 @@ async def test_tt_um_senolgulgonul(dut):
         "00000000"   # dp = 0
     ]
 
-    # Ensure initialization
-    dut.ui_in.value = 0
-
-    # Wait for initialization to settle
-    await Timer(500, units='ns')
+   
 
     for i in range(len(expected_letters)):
         # Simulate button press: create a clean rising edge on ui_in[0]
@@ -45,8 +41,8 @@ async def test_tt_um_senolgulgonul(dut):
         assert output_value == expected_letters[i], f"Mismatch at index {i}: Expected {expected_letters[i]}, got {output_value}"
 
         # Ensure ui_in[0] is low again for the next cycle
-        dut.ui_in.value = 0
         await Timer(100, units='ns')
+
 
     dut._log.info("Test completed successfully.")
 
