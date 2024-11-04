@@ -1,14 +1,9 @@
 # SPDX-FileCopyrightText: © 2024 Tiny Tapeout
 # SPDX-License-Identifier: Apache-2.0
 
-
-import os
 import cocotb
 from cocotb.triggers import Timer
 from cocotb.result import TestFailure
-
-# Ensure environment variable is set to ignore 'x' states
-os.environ["COCOTB_RESOLVE_X"] = "IGNORE"
 
 @cocotb.test()
 async def test_tt_um_senolgulgonul(dut):
