@@ -28,8 +28,10 @@ async def test_tt_um_senolgulgonul(dut):
         # Simulate button press: create a clean rising edge on ui_in[0]
         dut.ui_in[0].value = 0
         await Timer(500, units='ns')
+        dut._log.info(f'ui_in[0] before press: {dut.ui_in[0].value}')
         dut.ui_in[0].value = 1
         await Timer(500, units='ns')
+        dut._log.info(f'ui_in[0] after press: {dut.ui_in[0].value}')
 
         output_value = dut.uo_out.value.binstr  # Get the full 8-bit binary string
 
