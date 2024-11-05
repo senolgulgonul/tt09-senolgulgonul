@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 import cocotb
-from cocotb.triggers import Timer, FallingEdge
+from cocotb.triggers import Timer
 from cocotb.result import TestFailure
 
 @cocotb.test()
@@ -23,13 +23,6 @@ async def test_tt_um_senolgulgonul(dut):
         "00111110",  # U
         "00001110"   # L
     ]
-
-    # Reset the DUT with a negative edge
-    dut.rst_n.value = 1
-    await Timer(100, units='ns')
-    dut.rst_n.value = 0  # Apply reset
-    await Timer(100, units='ns')
-    dut.rst_n.value = 1  # Release reset
 
     # Initialize all bits of dut.ui_in to 0
     dut.ui_in.value = 0
