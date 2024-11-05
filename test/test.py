@@ -8,6 +8,7 @@ from cocotb.result import TestFailure
 @cocotb.test()
 async def test_tt_um_senolgulgonul(dut):
     expected_letters = [
+        "10000000",  # dp = 1
         "01011011",  # S
         "01001111",  # E
         "00010101",  # n
@@ -20,8 +21,7 @@ async def test_tt_um_senolgulgonul(dut):
         "01111110",  # O
         "00010101",  # n
         "00111110",  # U
-        "00001110",  # L
-        "10000000"   # dp = 0
+        "00001110"   # L
     ]
 
     # Reset the DUT with a negative edge
