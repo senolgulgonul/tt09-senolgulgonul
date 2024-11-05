@@ -16,9 +16,9 @@ module tt_um_senolgulgonul (
     input  wire       rst_n     // reset_n - low to reset
 );
 
-    reg [3:0] index = 0;
-    reg [7:0] letters[0:13]; // Extended to 8 bits to include dp pin
-    reg [7:0] segment_output; // Initialize to all segments and dp off
+    reg [3:0] index;
+    reg [7:0] letters[0:13]; 
+    reg [7:0] segment_output;
 
     initial begin
         // 7-segment encodings for "SEnOLGULGONUL" with dp pin = 0
@@ -36,12 +36,16 @@ module tt_um_senolgulgonul (
         letters[11] = 8'b00111110; // U
         letters[12] = 8'b00001110; // L
         letters[13] = 8'b00000000; // dp = 0
-        segment_output = 8'b00000000;
     end
 
-    always @(posedge ui_in[0]) begin
-        index <= (index == 4'd13) ? 0 : index + 1;
-        segment_output <= letters[index];
+    always @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            index <= 4'd0;
+            segment_output <= 8'b00000000;
+        end else if (ui_in[0]) begin
+            index <= (index == 4'd13) ? 0 : index + 1;
+            segment_output <= letters[index];
+        end
     end
 
     assign uo_out = segment_output;  // Include dp in the output
@@ -51,6 +55,6 @@ module tt_um_senolgulgonul (
     assign uio_oe = 8'b11111111;
 
     // Prevent warnings for unused inputs
-    wire _unused = &{ena, clk, rst_n, uio_in, ui_in[7:1], 1'b0};
+    wire _unused = &{ena, clk, rst_n, uio_in, ui_in[7:1]};
 
 endmodule
