@@ -38,10 +38,12 @@ module tt_um_senolgulgonul (
             letters[10] <= 8'b00010101; // n
             letters[11] <= 8'b00111110; // U
             letters[12] <= 8'b00001110; // L
-            letters[13] <= 8'b00000000; // dp = 0
+            letters[13] <= 8'b10000000; // dp = 1
         end else begin
-            index <= (index == 4'd13) ? 0 : index + 1;
-            segment_output <= letters[index];
+            if (ui_in[0]) begin
+                index <= (index == 4'd13) ? 0 : index + 1;
+                segment_output <= letters[index];
+            end
         end
     end
 
