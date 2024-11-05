@@ -17,33 +17,31 @@ module tt_um_senolgulgonul (
 );
 
     reg [3:0] index;
-    reg [7:0] letters[0:13]; 
     reg [7:0] segment_output;
 
     always @(posedge ui_in[0] or negedge rst_n) begin
         if (!rst_n) begin
             index <= 4'd0;
             segment_output <= 8'b00000000;
-            // Initialize letters array within reset block
-            letters[0]  <= 8'b10000000; // dp = 1
-            letters[1]  <= 8'b01011011; // S
-            letters[2]  <= 8'b01001111; // E
-            letters[3]  <= 8'b00010101; // n
-            letters[4]  <= 8'b01111110; // O
-            letters[5]  <= 8'b00001110; // L
-            letters[6]  <= 8'b01011111; // G
-            letters[7]  <= 8'b00111110; // U
-            letters[8]  <= 8'b00001110; // L
-            letters[9]  <= 8'b01011111; // G
-            letters[10] <= 8'b01111110; // O
-            letters[11] <= 8'b00010101; // n
-            letters[12] <= 8'b00111110; // U
-            letters[13] <= 8'b00001110; // L
         end else begin
-            if (ui_in[0]) begin
-                index <= (index == 4'd13) ? 0 : index + 1;
-                segment_output <= letters[index];
-            end
+            index <= (index == 4'd13) ? 0 : index + 1;
+            case (index)
+                4'd0: segment_output <= 8'b10000000; // dp = 1
+                4'd1: segment_output <= 8'b01011011; // S
+                4'd2: segment_output <= 8'b01001111; // E
+                4'd3: segment_output <= 8'b00010101; // n
+                4'd4: segment_output <= 8'b01111110; // O
+                4'd5: segment_output <= 8'b00001110; // L
+                4'd6: segment_output <= 8'b01011111; // G
+                4'd7: segment_output <= 8'b00111110; // U
+                4'd8: segment_output <= 8'b00001110; // L
+                4'd9: segment_output <= 8'b01011111; // G
+                4'd10: segment_output <= 8'b01111110; // O
+                4'd11: segment_output <= 8'b00010101; // n
+                4'd12: segment_output <= 8'b00111110; // U
+                4'd13: segment_output <= 8'b00001110; // L
+                default: segment_output <= 8'b00000000; // Default case
+            endcase
         end
     end
 
