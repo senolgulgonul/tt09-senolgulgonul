@@ -16,26 +16,31 @@ module tt_um_senolgulgonul (
     input  wire       rst_n     // reset_n - low to reset
 );
 
-    reg [3:0] index = 4'd0;
+    reg [3:0] index;
 
-    always @(posedge ui_in[0]) begin
-        index <= (index == 4'd13) ? 0 : index + 1;
+    always @(posedge ui_in[0] or negedge rst_n) begin
+        if (!rst_n) begin
+            index <= 4'd0;
+            uo_out <= 8'b00000000;
+        end else begin
+            index <= (index == 4'd13) ? 0 : index + 1;
 
-        uo_out <= (index == 4'd0)  ? 8'b10000000 : // dp = 1
-                  (index == 4'd1)  ? 8'b01011011 : // S
-                  (index == 4'd2)  ? 8'b01001111 : // E
-                  (index == 4'd3)  ? 8'b00010101 : // n
-                  (index == 4'd4)  ? 8'b01111110 : // O
-                  (index == 4'd5)  ? 8'b00001110 : // L
-                  (index == 4'd6)  ? 8'b01011111 : // G
-                  (index == 4'd7)  ? 8'b00111110 : // U
-                  (index == 4'd8)  ? 8'b00001110 : // L
-                  (index == 4'd9)  ? 8'b01011111 : // G
-                  (index == 4'd10) ? 8'b01111110 : // O
-                  (index == 4'd11) ? 8'b00010101 : // n
-                  (index == 4'd12) ? 8'b00111110 : // U
-                  (index == 4'd13) ? 8'b00001110 : // L
-                                    8'b00000000; // default
+            uo_out <= (index == 4'd0)  ? 8'b10000000 : // dp = 1
+                      (index == 4'd1)  ? 8'b01011011 : // S
+                      (index == 4'd2)  ? 8'b01001111 : // E
+                      (index == 4'd3)  ? 8'b00010101 : // n
+                      (index == 4'd4)  ? 8'b01111110 : // O
+                      (index == 4'd5)  ? 8'b00001110 : // L
+                      (index == 4'd6)  ? 8'b01011111 : // G
+                      (index == 4'd7)  ? 8'b00111110 : // U
+                      (index == 4'd8)  ? 8'b00001110 : // L
+                      (index == 4'd9)  ? 8'b01011111 : // G
+                      (index == 4'd10) ? 8'b01111110 : // O
+                      (index == 4'd11) ? 8'b00010101 : // n
+                      (index == 4'd12) ? 8'b00111110 : // U
+                      (index == 4'd13) ? 8'b00001110 : // L
+                                        8'b00000000; // default
+        end
     end
 
     // Assign the other outputs
