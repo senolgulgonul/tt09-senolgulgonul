@@ -38,11 +38,11 @@ module tt_um_senolgulgonul (
         letters[13] = 8'b00000000; // dp = 0
     end
 
-    always @(posedge clk or negedge rst_n) begin
+    always @(posedge ui_in[0] or negedge rst_n) begin
         if (!rst_n) begin
             index <= 4'd0;
             segment_output <= 8'b00000000;
-        end else if (ui_in[0]) begin
+        end else begin
             index <= (index == 4'd13) ? 0 : index + 1;
             segment_output <= letters[index];
         end
