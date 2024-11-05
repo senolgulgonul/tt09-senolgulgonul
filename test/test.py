@@ -40,9 +40,9 @@ async def test_tt_um_senolgulgonul(dut):
     for i in range(len(expected_letters)):
         # Simulate button press: create a clean rising edge on ui_in[0]
         dut.ui_in[0].value = 0
-        await Timer(10, units='ns')
+        await Timer(100, units='ns')
         dut.ui_in[0].value = 1
-        await Timer(10, units='ns')
+        await Timer(100, units='ns')
 
         output_value = dut.uo_out.value.binstr  # Get the full 8-bit binary string
 
@@ -53,6 +53,6 @@ async def test_tt_um_senolgulgonul(dut):
 
         # Ensure ui_in[0] is low again for the next cycle
         dut.ui_in[0].value = 0
-        await Timer(10, units='ns')
+        await Timer(100, units='ns')
 
     dut._log.info("Test completed successfully.")
