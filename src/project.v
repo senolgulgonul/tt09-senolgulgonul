@@ -20,28 +20,25 @@ module tt_um_senolgulgonul (
     reg [7:0] letters[0:13]; 
     reg [7:0] segment_output;
 
-    initial begin
-        // 7-segment encodings for "SEnOLGULGONUL" with dp pin = 0
-        letters[0]  = 8'b01011011; // S
-        letters[1]  = 8'b01001111; // E
-        letters[2]  = 8'b00010101; // n
-        letters[3]  = 8'b01111110; // O
-        letters[4]  = 8'b00001110; // L
-        letters[5]  = 8'b01011111; // G
-        letters[6]  = 8'b00111110; // U
-        letters[7]  = 8'b00001110; // L
-        letters[8]  = 8'b01011111; // G
-        letters[9]  = 8'b01111110; // O
-        letters[10] = 8'b00010101; // n
-        letters[11] = 8'b00111110; // U
-        letters[12] = 8'b00001110; // L
-        letters[13] = 8'b00000000; // dp = 0
-    end
-
     always @(posedge ui_in[0] or negedge rst_n) begin
         if (!rst_n) begin
             index <= 4'd0;
             segment_output <= 8'b00000000;
+            // Initialize letters array within reset block
+            letters[0]  <= 8'b01011011; // S
+            letters[1]  <= 8'b01001111; // E
+            letters[2]  <= 8'b00010101; // n
+            letters[3]  <= 8'b01111110; // O
+            letters[4]  <= 8'b00001110; // L
+            letters[5]  <= 8'b01011111; // G
+            letters[6]  <= 8'b00111110; // U
+            letters[7]  <= 8'b00001110; // L
+            letters[8]  <= 8'b01011111; // G
+            letters[9]  <= 8'b01111110; // O
+            letters[10] <= 8'b00010101; // n
+            letters[11] <= 8'b00111110; // U
+            letters[12] <= 8'b00001110; // L
+            letters[13] <= 8'b00000000; // dp = 0
         end else begin
             index <= (index == 4'd13) ? 0 : index + 1;
             segment_output <= letters[index];
