@@ -28,7 +28,7 @@ async def test_tt_um_senolgulgonul(dut):
     dut.rst_n.value = 1
     await Timer(100, units='ns')
     dut.rst_n.value = 0  # Apply reset
-    await Timer(100, units='ns')
+    await Timer(1000, units='ns')
     dut.rst_n.value = 1  # Release reset
 
     # Initialize all bits of dut.ui_in to 0
