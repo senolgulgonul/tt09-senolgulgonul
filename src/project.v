@@ -7,7 +7,7 @@
 
 module tt_um_senolgulgonul (
     input  wire [7:0] ui_in,    // Dedicated inputs
-    output reg [7:0] uo_out,   // Dedicated outputs
+    output reg [7:0] uo_out,    // Dedicated outputs
     input  wire [7:0] uio_in,   // IOs: Input path
     output wire [7:0] uio_out,  // IOs: Output path
     output wire [7:0] uio_oe,   // IOs: Enable path (active high: 0=input, 1=output)
@@ -39,7 +39,7 @@ module tt_um_senolgulgonul (
                       (index == 4'd11) ? 8'b00010101 : // n
                       (index == 4'd12) ? 8'b00111110 : // U
                       (index == 4'd13) ? 8'b00001110 : // L
-                                        8'b00000000; // default
+                                        8'b00000000;   // default
         end
     end
 
@@ -47,7 +47,7 @@ module tt_um_senolgulgonul (
     assign uio_out = 8'b0;
     assign uio_oe = 8'b11111111;
 
-    // Prevent warnings for unused inputs
-    wire _unused = &{ena, clk, uio_in, ui_in[7:1],1'b0};
+    // Prevent warnings for unused inputs by logically AND-ing all bits and including a 0
+    wire _unused = &{ena, clk, uio_in, ui_in[7:1], 1'b0};
 
 endmodule
