@@ -21,7 +21,7 @@ async def test_tt_um_senolgulgonul(dut):
         "00010101",  # n
         "00111110",  # U
         "00001110",  # L
-        "00000000"   # dp = 0
+        "10000000"   # dp = 0
     ]
 
     # Reset the DUT with a negative edge
