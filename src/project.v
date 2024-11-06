@@ -24,22 +24,23 @@ module tt_um_senolgulgonul (
             index <= 4'd0;
             uo_out <= 8'b00000000;
         end else begin
-            index <= (index == 4'd13) ? 0 : index + 1;
+            index <= (index == 4'd14) ? 0 : index + 1;
             case (index)
-                4'd0:  uo_out <= 8'b10000000; // dp = 1
-                4'd1:  uo_out <= 8'b01011011; // S
-                4'd2:  uo_out <= 8'b01001111; // E
-                4'd3:  uo_out <= 8'b00010101; // n
-                4'd4:  uo_out <= 8'b01111110; // O
-                4'd5:  uo_out <= 8'b00001110; // L
-                4'd6:  uo_out <= 8'b01011111; // G
-                4'd7:  uo_out <= 8'b00111110; // U
-                4'd8:  uo_out <= 8'b00001110; // L
-                4'd9:  uo_out <= 8'b01011111; // G
-                4'd10: uo_out <= 8'b01111110; // O
-                4'd11: uo_out <= 8'b00010101; // n
-                4'd12: uo_out <= 8'b00111110; // U
-                4'd13: uo_out <= 8'b00001110; // L
+                4'd0:  uo_out <= 8'b00000000; // blank
+                4'd1:  uo_out <= 8'b10000000; // dp = 1
+                4'd2:  uo_out <= 8'b01011011; // S
+                4'd3:  uo_out <= 8'b01001111; // E
+                4'd4:  uo_out <= 8'b00010101; // n
+                4'd5:  uo_out <= 8'b01111110; // O
+                4'd6:  uo_out <= 8'b00001110; // L
+                4'd7:  uo_out <= 8'b01011111; // G
+                4'd8:  uo_out <= 8'b00111110; // U
+                4'd9:  uo_out <= 8'b00001110; // L
+                4'd10:  uo_out <= 8'b01011111; // G
+                4'd11: uo_out <= 8'b01111110; // O
+                4'd12: uo_out <= 8'b00010101; // n
+                4'd13: uo_out <= 8'b00111110; // U
+                4'd14: uo_out <= 8'b00001110; // L
                 default: uo_out <= 8'b00000000;
             endcase
         end
