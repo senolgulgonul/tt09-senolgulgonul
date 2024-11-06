@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: © 2024 Tiny Tapeout
+# SPDX-License-Identifier: Apache-2.0
+
 import cocotb
 from cocotb.clock import Clock
 from cocotb.triggers import RisingEdge, FallingEdge, Timer
@@ -35,13 +38,9 @@ async def test_tt_um_senolgulgonul(dut):
     
     # Release reset by setting rst_n to 1
     dut.rst_n.value = 1
-    await Timer(100, units='ns')  # Ensure the reset is applied and released sequentially
 
     # Initialize all bits of dut.ui_in to 0
     dut.ui_in.value = 0
-
-    # Wait for initialization to settle
-    await Timer(100, units='ns')
 
     for i in range(len(expected_letters)):
         await RisingEdge(dut.clk)  # Wait for the positive edge of the clock
