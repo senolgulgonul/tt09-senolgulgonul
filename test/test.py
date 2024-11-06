@@ -37,8 +37,8 @@ async def test_tt_um_senolgulgonul(dut):
     dut.rst_n.value = 1
     await Timer(10, units='ns')  # Add a delay after setting rst_n to 1
 
-    i = 1
-    while i < len(expected_letters):  # Loop until i reaches the length of expected_letters
+    i = 0
+    while i < 2*len(expected_letters):  # Loop until i reaches the length of expected_letters
         await RisingEdge(dut.clk)  # Wait for the positive edge of the clock
 
         output_value = dut.uo_out.value.binstr  # Get the full 8-bit binary string
