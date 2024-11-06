@@ -8,7 +8,7 @@ from cocotb.triggers import RisingEdge, FallingEdge, Timer
 @cocotb.test()
 async def test_tt_um_senolgulgonul(dut):
     # Create a clock signal on dut.clk
-    clock = Clock(dut.clk, 20, units="ns")  # 50 MHz clock
+    clock = Clock(dut.clk, 1000, units="ns")  # 1 MHz clock
     cocotb.start_soon(clock.start())
 
     expected_letters = [
@@ -37,7 +37,7 @@ async def test_tt_um_senolgulgonul(dut):
     await Timer(100, units='ns')
     
     # Release reset by setting rst_n to 1
-    dut.rst_n.value = 1
+    dut.rst_n.value = 100
     await Timer(1, units='ns')
 
     for i in range(len(expected_letters)):
