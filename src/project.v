@@ -24,8 +24,8 @@ module tt_um_senolgulgonul (
             index <= 4'd0;
             uo_out <= 8'b00000000;
         end else begin
-            index <= (index == 4'd14) ? 0 : index + 1;
-            case (index)
+            index <= (index == 4'd14) ? 0 : index + 1'd1;
+            case (index + 1'd1)
                 4'd0:  uo_out <= 8'b00000000; // blank
                 4'd1:  uo_out <= 8'b10000000; // dp = 1
                 4'd2:  uo_out <= 8'b01011011; // S
