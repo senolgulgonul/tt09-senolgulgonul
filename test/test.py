@@ -37,8 +37,8 @@ async def test_tt_um_senolgulgonul(dut):
     await Timer(100, units='ns')
     
     # Release reset by setting rst_n to 1
-    dut.rst_n.value = 100
-    await Timer(1, units='ns')
+    dut.rst_n.value = 1
+    await Timer(100, units='ns')
 
     for i in range(len(expected_letters)):
         await RisingEdge(dut.clk)  # Wait for the positive edge of the clock
