@@ -1,11 +1,13 @@
-# SPDX-FileCopyrightText: © 2024 Tiny Tapeout
-# SPDX-License-Identifier: Apache-2.0
-
 import cocotb
-from cocotb.triggers import Timer, RisingEdge, FallingEdge
+from cocotb.clock import Clock
+from cocotb.triggers import RisingEdge, FallingEdge, Timer
 
 @cocotb.test()
 async def test_tt_um_senolgulgonul(dut):
+    # Create a clock signal on dut.clk
+    clock = Clock(dut.clk, 20, units="ns")  # 50 MHz clock
+    cocotb.start_soon(clock.start())
+
     expected_letters = [
         "10000000",  # dp = 1
         "01011011",  # S
