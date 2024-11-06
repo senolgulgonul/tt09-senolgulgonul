@@ -18,7 +18,7 @@ module tt_um_senolgulgonul (
 
     reg [3:0] index;
 
-    always @(posedge ui_in[0] or negedge rst_n) begin
+    always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
             index <= 4'd0;
             uo_out <= 8'b00000000;
@@ -49,6 +49,6 @@ module tt_um_senolgulgonul (
     assign uio_oe = 8'b11111111;
 
     // Prevent warnings for unused inputs by logically AND-ing all bits and including a 0
-    wire _unused = &{ena, clk, uio_in, ui_in[7:1], 1'b0};
+    wire _unused = &{ena, uio_in, ui_in, 1'b0};
 
 endmodule
