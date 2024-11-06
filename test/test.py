@@ -34,7 +34,7 @@ async def test_tt_um_senolgulgonul(dut):
     
     # Apply reset by setting rst_n to 0
     dut.rst_n.value = 0
-    await Timer(100, units='ns')
+    await Timer(1, units='ns')
     
     # Release reset by setting rst_n to 1
     dut.rst_n.value = 1
