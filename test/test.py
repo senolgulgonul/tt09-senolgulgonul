@@ -12,6 +12,7 @@ async def test_tt_um_senolgulgonul(dut):
     cocotb.start_soon(clock.start())
 
     expected_letters = [
+        "00000000",  # blank
         "10000000",  # dp = 1
         "01011011",  # S
         "01001111",  # E
