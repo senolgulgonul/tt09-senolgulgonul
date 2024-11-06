@@ -31,6 +31,9 @@ async def test_tt_um_senolgulgonul(dut):
     # Keep rst_n constant at 1
     dut.rst_n.value = 1
 
+    # Initialize all bits of dut.ui_in to 0
+    dut.ui_in.value = 0
+
     for i in range(len(expected_letters)):
         await RisingEdge(dut.clk)  # Wait for the positive edge of the clock
 
