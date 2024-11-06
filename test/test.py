@@ -23,15 +23,15 @@ async def test_tt_um_senolgulgonul(dut):
         "00001110"   # L
     ]
 
-    # Initial state of rst_n
+    # Initially set rst_n to 1
     dut.rst_n.value = 1
     await Timer(100, units='ns')
     
-    # Apply reset
+    # Apply reset by setting rst_n to 0
     dut.rst_n.value = 0
     await Timer(100, units='ns')
     
-    # Release reset
+    # Release reset by setting rst_n to 1
     dut.rst_n.value = 1
     await Timer(100, units='ns')  # Ensure the reset is applied and released sequentially
 
@@ -42,11 +42,7 @@ async def test_tt_um_senolgulgonul(dut):
     await Timer(100, units='ns')
 
     for i in range(len(expected_letters)):
-        # Simulate button press: create a clean rising edge on ui_in[0]
-        dut.ui_in[0].value = 0
-        await Timer(100, units='ns')
-        dut.ui_in[0].value = 1
-        await Timer(100, units='ns')
+        await RisingEdge(dut.clk)  # Wait for the positive edge of the clock
 
         output_value = dut.uo_out.value.binstr  # Get the full 8-bit binary string
 
@@ -54,9 +50,5 @@ async def test_tt_um_senolgulgonul(dut):
         dut._log.info(f'Expected: {expected_letters[i]}, Actual: {output_value}')
 
         assert output_value == expected_letters[i], f"Mismatch at index {i}: Expected {expected_letters[i]}, got {output_value}"
-
-        # Ensure ui_in[0] is low again for the next cycle
-        dut.ui_in[0].value = 0
-        await Timer(100, units='ns')
 
     dut._log.info("Test completed successfully.")
