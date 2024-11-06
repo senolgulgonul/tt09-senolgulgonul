@@ -8,7 +8,7 @@ from cocotb.triggers import RisingEdge, FallingEdge, Timer
 @cocotb.test()
 async def test_tt_um_senolgulgonul(dut):
     # Create a clock signal on dut.clk
-    clock = Clock(dut.clk, 1000, units="ns")  # 1 MHz clock
+    clock = Clock(dut.clk, 10, units="ns")  # 1 MHz clock
     cocotb.start_soon(clock.start())
 
     expected_letters = [
