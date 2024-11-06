@@ -3,7 +3,7 @@
 
 import cocotb
 from cocotb.clock import Clock
-from cocotb.triggers import RisingEdge, FallingEdge, Timer
+from cocotb.triggers import RisingEdge, Timer
 
 @cocotb.test()
 async def test_tt_um_senolgulgonul(dut):
@@ -28,16 +28,8 @@ async def test_tt_um_senolgulgonul(dut):
         "00001110"   # L
     ]
 
-    # Initially set rst_n to 1
-    dut.rst_n.value = 1
-    await Timer(100, units='ns')
-    
-    # Apply reset by setting rst_n to 0
+    # Keep rst_n low
     dut.rst_n.value = 0
-    await Timer(100, units='ns')
-    
-    # Release reset by setting rst_n to 1
-    dut.rst_n.value = 1
 
     # Initialize all bits of dut.ui_in to 0
     dut.ui_in.value = 0
