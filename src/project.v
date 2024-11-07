@@ -53,6 +53,6 @@ module tt_um_senolgulgonul (
     assign uio_oe = 8'b11111111;
 
     // Prevent warnings for unused inputs by logically AND-ing all bits and including a 0
-    wire _unused = &{ena, uio_in, ui_in, 1'b0};
+    wire _unused = &{ena, uio_in, ui_in[7:2], 1'b0};
 
 endmodule
