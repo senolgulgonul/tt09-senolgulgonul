@@ -45,7 +45,6 @@ module tt_um_senolgulgonul (
     not (uio_out[0], ui_in[0]);
     
     // Two NOT gates in series
-    wire n2_out;
     not (n1_out, ui_in[1]);     // First NOT gate
     not (uio_out[1], n1_out);   // Second NOT gate
 
