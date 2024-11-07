@@ -1,9 +1,3 @@
-/*
- * Copyright (c) 2024 Senol Gulgonul
- * SPDX-License-Identifier: Apache-2.0
- */
-
-
 `default_nettype none
 
 module tt_um_senolgulgonul (
@@ -18,7 +12,8 @@ module tt_um_senolgulgonul (
 );
 
     reg [3:0] index;
-
+    wire n1_out;                // Intermediate wire for the second NOT gate
+    
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
             index <= 4'd0;
@@ -46,8 +41,16 @@ module tt_um_senolgulgonul (
         end
     end
 
+    // NOT gate using primitives
+    not (uio_out[0], ui_in[0]);
+    
+    // Two NOT gates in series
+    wire n2_out;
+    not (n1_out, ui_in[1]);     // First NOT gate
+    not (uio_out[1], n1_out);   // Second NOT gate
+
     // Assign the other outputs
-    assign uio_out = 8'b0;
+    assign uio_out[7:2] = 6'b0;  // Assign remaining bits of uio_out to 0
     assign uio_oe = 8'b11111111;
 
     // Prevent warnings for unused inputs by logically AND-ing all bits and including a 0
